@@ -54,6 +54,21 @@ export default function Home () {
               </button>
             </div>
             <div>
+              <form>
+                <label>
+                  Aggregate Function:
+                  <select>
+                    <option selected value='mean'>
+                      Mean
+                    </option>
+                    <option selected value='min'>
+                      Min
+                    </option>
+                  </select>
+                </label>
+              </form>
+            </div>
+            <div>
               <button className={styles.gDAddBtn}>+</button>
             </div>
           </div>
