@@ -16,6 +16,9 @@ export default function Home () {
 
   const [graphDesigner, setGraphDesigner] = useState(false)
 
+  //hooks for the form logic
+  const [aggFn, setAggFn] = useState('mean')
+
   const addGraph = () => {
     setGraph([...graph, 'GRAPH2'])
     console.log(graph)
@@ -57,7 +60,10 @@ export default function Home () {
               <form>
                 <label>
                   Aggregate Function:
-                  <select>
+                  <select
+                    defaultValue={aggFn}
+                    onChange={e => setAggFn(e.target.value)}
+                  >
                     <option selected value='mean'>
                       Mean
                     </option>
@@ -67,6 +73,7 @@ export default function Home () {
                   </select>
                 </label>
               </form>
+              {aggFn}
             </div>
             <div>
               <button className={styles.gDAddBtn}>+</button>
