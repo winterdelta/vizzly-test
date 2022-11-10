@@ -1,31 +1,47 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { useState } from 'react'
+import { VictoryChart, VictoryLine, VictoryTheme, VictoryBar } from 'victory'
+import data from '../public/dummyData.json'
+import sales from '../public/us-sales.json'
+
+// const data = [
+//   { quarter: 1, earnings: 13000 },
+//   { quarter: 2, earnings: 16500 },
+//   { quarter: 3, earnings: 14250 },
+//   { quarter: 4, earnings: 19000 }
+// ]
 
 export default function Home () {
+  // the data displayed to the user
   const [graph, setGraph] = useState([
-    'GRAPH'
-    // 'GRAPH',
-    // 'GRAPH',
-    // 'GRAPH',
-    // 'GRAPH',
-    // 'GRAPH',
-    // 'GRAPH',
-    // 'GRAPH'
+    { id: 1, measure: 'value', dimension: 'status' },
+    { id: 2, measure: 'value', dimension: 'month' },
+    { id: 3, measure: 'value', dimension: 'status' },
+    { id: 4, measure: 'value', dimension: 'month' }
   ])
 
+  // hook that triggers the graph-designer Modal
   const [graphDesigner, setGraphDesigner] = useState(false)
 
   //hooks for the form logic
   const [aggFn, setAggFn] = useState('mean')
+  const [dimension, setDimension] = useState('total')
+  const [measure, setMeasure] = useState('year')
 
+  // fn which appends content to the display
   const addGraph = () => {
     setGraph([...graph, 'GRAPH2'])
     console.log(graph)
   }
 
+  // toggle fn for the graph-designer modal
   const showGraphDesigner = () => {
     setGraphDesigner(!graphDesigner)
+  }
+
+  const close = () => {
+    setGraphDesigner(false)
   }
 
   return (
@@ -36,6 +52,7 @@ export default function Home () {
       </Head>
 
       <nav className={styles.nav}>
+        {/* button which renders the graph-designer modal */}
         <button
           onClick={() => {
             console.log('CLICK')
@@ -48,6 +65,7 @@ export default function Home () {
         </button>
       </nav>
 
+      {/* graph-designer modal */}
       {graphDesigner && (
         <div className={styles.graphDesignerContainer}>
           <div className={styles.graphDesigner}>
@@ -56,8 +74,9 @@ export default function Home () {
                 x
               </button>
             </div>
+            <h1>Line Chart</h1>
             <div>
-              <form>
+              <form className={styles.form}>
                 <label>
                   Aggregate Function:
                   <select
@@ -67,16 +86,52 @@ export default function Home () {
                     <option selected value='mean'>
                       Mean
                     </option>
-                    <option selected value='min'>
-                      Min
+                    <option value='min'>Min</option>
+                  </select>
+                </label>
+                <label>
+                  Dimension:
+                  <select
+                    defaultValue={aggFn}
+                    onChange={e => setDimension(e.target.value)}
+                  >
+                    <option selected value='total'>
+                      Total
+                    </option>
+                    <option value='value'>Value</option>
+                  </select>
+                </label>
+                <label>
+                  Measure:
+                  <select
+                    defaultValue={measure}
+                    onChange={e => setMeasure(e.target.value)}
+                  >
+                    <option selected value='status'>
+                      Status
+                    </option>
+                    <option selected value='month'>
+                      Month
                     </option>
                   </select>
                 </label>
               </form>
-              {aggFn}
+              <div className={styles.paramsSelected}>
+                <h3>
+                  Params selected: {aggFn}, {measure}, {dimension}
+                </h3>
+              </div>
             </div>
-            <div>
-              <button className={styles.gDAddBtn}>+</button>
+            <div className={styles.gDAddBtnContainer}>
+              <button
+                onClick={() => {
+                  addGraph()
+                  close()
+                }}
+                className={styles.gDAddBtn}
+              >
+                +
+              </button>
             </div>
           </div>
         </div>
@@ -85,12 +140,24 @@ export default function Home () {
       <main className={styles.main}>
         {graph.map((g, i) => (
           <div className={styles.graph} key={i}>
-            {g}
+            {/* {g.name} */}
+            <div>
+              <VictoryChart>
+                <VictoryLine
+                  data={sales}
+                  // data accessor for x values
+                  x={g.measure}
+                  // x='month'
+                  // data accessor for y values
+                  y={g.dimension}
+                />
+              </VictoryChart>
+            </div>
           </div>
         ))}
       </main>
 
-      <footer className={styles.footer}></footer>
+      <footer className={styles.footer}>Built by: Taimur Siddiqui</footer>
     </div>
   )
 }
