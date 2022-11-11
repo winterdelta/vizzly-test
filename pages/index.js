@@ -1,16 +1,15 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { useState } from 'react'
-import { VictoryChart, VictoryLine, VictoryTheme, VictoryBar } from 'victory'
+import { useState, useEffect } from 'react'
+import {
+  VictoryChart,
+  VictoryLine,
+  VictoryTheme,
+  VictoryBar,
+  VictoryLabel
+} from 'victory'
 import data from '../public/dummyData.json'
 import sales from '../public/us-sales.json'
-
-// const data = [
-//   { quarter: 1, earnings: 13000 },
-//   { quarter: 2, earnings: 16500 },
-//   { quarter: 3, earnings: 14250 },
-//   { quarter: 4, earnings: 19000 }
-// ]
 
 export default function Home () {
   // the data displayed to the user
@@ -27,11 +26,16 @@ export default function Home () {
   //hooks for the form logic
   const [aggFn, setAggFn] = useState('mean')
   const [dimension, setDimension] = useState('total')
-  const [measure, setMeasure] = useState('year')
+  const [measure, setMeasure] = useState('status')
 
   // fn which appends content to the display
   const addGraph = () => {
-    setGraph([...graph, 'GRAPH2'])
+    console.log(aggFn, measure, dimension)
+    setGraph([
+      ...graph,
+      { id: 5, measure: measure, dimension: dimension }
+      // 'GRAPH2'
+    ])
     console.log(graph)
   }
 
@@ -83,7 +87,7 @@ export default function Home () {
                     defaultValue={aggFn}
                     onChange={e => setAggFn(e.target.value)}
                   >
-                    <option selected value='mean'>
+                    <option defaultValue value='mean'>
                       Mean
                     </option>
                     <option value='min'>Min</option>
@@ -93,26 +97,24 @@ export default function Home () {
                   Dimension:
                   <select
                     defaultValue={aggFn}
-                    onChange={e => setDimension(e.target.value)}
+                    onChange={e => setMeasure(e.target.value)}
                   >
-                    <option selected value='total'>
-                      Total
+                    <option value='total'>Total</option>
+                    <option defaultValue value='value'>
+                      Value
                     </option>
-                    <option value='value'>Value</option>
                   </select>
                 </label>
                 <label>
                   Measure:
                   <select
                     defaultValue={measure}
-                    onChange={e => setMeasure(e.target.value)}
+                    onChange={e => setDimension(e.target.value)}
                   >
-                    <option selected value='status'>
+                    <option defaultValue value='status'>
                       Status
                     </option>
-                    <option selected value='month'>
-                      Month
-                    </option>
+                    <option value='month'>Month</option>
                   </select>
                 </label>
               </form>
@@ -137,19 +139,22 @@ export default function Home () {
         </div>
       )}
 
+      {/* Graph Display Area */}
       <main className={styles.main}>
-        {graph.map((g, i) => (
-          <div className={styles.graph} key={i}>
-            {/* {g.name} */}
+        {graph.map((g, id) => (
+          <div className={styles.graph} key={id}>
+            <h4>
+              y={g.dimension}, x={g.measure}
+            </h4>
             <div>
-              <VictoryChart>
+              <VictoryChart className={styles.chart}>
                 <VictoryLine
                   data={sales}
                   // data accessor for x values
-                  x={g.measure}
+                  x={g.dimension}
                   // x='month'
                   // data accessor for y values
-                  y={g.dimension}
+                  y={g.measure}
                 />
               </VictoryChart>
             </div>

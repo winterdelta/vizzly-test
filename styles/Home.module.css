@@ -19,12 +19,13 @@
 }
 
 .graph {
-	height: 250px;
-	width: 250px;
+	height: fit-content;
+	width: 80vw;
 	border: 1px solid black;
 	border-radius: 20px;
 	margin: 20px;
-	display: flex;
+	display:flex;
+  flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
@@ -98,4 +99,9 @@
 
 .paramsSelected {
   margin-top: 20px;
+}
+
+.chart {
+  width: 70vw;
+  height: 50vw;
 }
