@@ -10,14 +10,15 @@ import {
 } from 'victory'
 import data from '../public/dummyData.json'
 import sales from '../public/us-sales.json'
+const _ = require('lodash')
 
 export default function Home () {
   // the data displayed to the user
   const [graph, setGraph] = useState([
-    { id: 1, measure: 'value', dimension: 'status' },
-    { id: 2, measure: 'value', dimension: 'month' },
-    { id: 3, measure: 'value', dimension: 'status' },
-    { id: 4, measure: 'value', dimension: 'month' }
+    { id: 1, measure: 'value', dimension: 'status', aggFn: 'mean' },
+    { id: 2, measure: 'value', dimension: 'month', aggFn: 'mean' },
+    { id: 3, measure: 'value', dimension: 'status', aggFn: 'mean' },
+    { id: 4, measure: 'value', dimension: 'month', aggFn: 'mean' }
   ])
 
   // hook that triggers the graph-designer Modal
@@ -47,6 +48,9 @@ export default function Home () {
   const close = () => {
     setGraphDesigner(false)
   }
+
+  const average = _.meanBy(data, d => d.value)
+  console.log(average)
 
   return (
     <div className={styles.container}>
@@ -157,6 +161,7 @@ export default function Home () {
                 />
               </VictoryChart>
             </div>
+            {/* {_.meanBy(data, d => d.measure)} */}
           </div>
         ))}
       </main>
