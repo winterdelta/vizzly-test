@@ -45,12 +45,14 @@ export default function Home () {
     setGraphDesigner(!graphDesigner)
   }
 
+  // close the graph-designer modal onClick
   const close = () => {
     setGraphDesigner(false)
   }
 
-  const average = _.meanBy(data, d => d.value)
-  console.log(average)
+  // Calculating the mean for the agg fn
+  // const average = _.meanBy(data, d => d.value)
+  // console.log(average)
 
   return (
     <div className={styles.container}>
@@ -149,18 +151,16 @@ export default function Home () {
             <h4>
               x={g.dimension}, y={g.measure}
             </h4>
-            <div>
-              <VictoryChart className={styles.chart}>
-                <VictoryLine
-                  data={sales}
-                  // data accessor for x values
-                  x={g.dimension}
-                  // x='month'
-                  // data accessor for y values
-                  y={g.measure}
-                />
-              </VictoryChart>
-            </div>
+            <VictoryChart className={styles.chart}>
+              <VictoryLine
+                data={sales}
+                // data accessor for x values
+                x={g.dimension}
+                // x='month'
+                // data accessor for y values
+                y={g.measure}
+              />
+            </VictoryChart>
             {/* {_.meanBy(data, d => d.measure)} */}
           </div>
         ))}
