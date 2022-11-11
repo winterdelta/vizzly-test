@@ -166,7 +166,7 @@ export default function Home () {
         ))}
       </main>
 
-      {/* footer */}
+      {/* footer... try clicking for an easter egg */}
       <footer className={styles.footer}>Built by: Taimur Siddiqui</footer>
     </div>
   )

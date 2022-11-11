@@ -24,8 +24,8 @@
 	border: 1px solid black;
 	border-radius: 20px;
 	margin: 20px;
-	display:flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
@@ -36,7 +36,7 @@
 	justify-content: flex-start;
 	align-items: flex-start;
 	flex-wrap: wrap;
-  z-index: -100;
+	z-index: -100;
 }
 
 .graphDesignerContainer {
@@ -61,7 +61,7 @@
 	border-radius: 40px;
 	background-color: white;
 	padding: 20px;
-  z-index: 1000;
+	z-index: 1000;
 }
 
 .gDCloseBtnContainer,
@@ -70,7 +70,7 @@
 	justify-content: flex-end;
 	align-items: flex-end;
 	width: 100%;
-  margin-top: 20px;
+	margin-top: 20px;
 }
 
 .gDAddBtn,
@@ -91,17 +91,29 @@
 } */
 
 .form {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-direction: column;
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: column;
 }
 
 .paramsSelected {
-  margin-top: 20px;
+	margin-top: 20px;
 }
 
 .chart {
-  width: 70vw;
-  height: 50vw;
+	width: 70vw;
+	height: 50vw;
+}
+
+.footer {
+	cursor: pointer;
+}
+
+.footer:hover span {
+	display: none;
+}
+
+.footer:hover:before {
+	content: "🦾";
 }
