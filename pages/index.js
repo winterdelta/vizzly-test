@@ -25,8 +25,8 @@ export default function Home () {
 
   //hooks for the form logic
   const [aggFn, setAggFn] = useState('mean')
-  const [dimension, setDimension] = useState('total')
-  const [measure, setMeasure] = useState('status')
+  const [dimension, setDimension] = useState('status')
+  const [measure, setMeasure] = useState('value')
 
   // fn which appends content to the display
   const addGraph = () => {
@@ -94,21 +94,20 @@ export default function Home () {
                   </select>
                 </label>
                 <label>
-                  Dimension:
+                  Measure:
                   <select
-                    defaultValue={aggFn}
+                    defaultValue={measure}
                     onChange={e => setMeasure(e.target.value)}
                   >
-                    <option value='total'>Total</option>
                     <option defaultValue value='value'>
                       Value
                     </option>
                   </select>
                 </label>
                 <label>
-                  Measure:
+                  Dimension:
                   <select
-                    defaultValue={measure}
+                    defaultValue={dimension}
                     onChange={e => setDimension(e.target.value)}
                   >
                     <option defaultValue value='status'>
@@ -144,7 +143,7 @@ export default function Home () {
         {graph.map((g, id) => (
           <div className={styles.graph} key={id}>
             <h4>
-              y={g.dimension}, x={g.measure}
+              x={g.dimension}, y={g.measure}
             </h4>
             <div>
               <VictoryChart className={styles.chart}>
@@ -162,6 +161,7 @@ export default function Home () {
         ))}
       </main>
 
+      {/* footer */}
       <footer className={styles.footer}>Built by: Taimur Siddiqui</footer>
     </div>
   )
